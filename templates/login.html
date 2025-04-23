@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="modal">
+    <h2>Iniciar Sesión</h2>
+    <form method="post">
+      <input type="text" name="nombre" placeholder="Nombre de usuario" required />
+      <input type="password" name="password" placeholder="Contraseña" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <p style="text-align:center; margin-top:20px;">
+      <a href="{{ url_for('recuperar') }}">¿Olvidaste tu contraseña?</a>
+    </p>
+    <p style="text-align:center;">
+      ¿No tienes cuenta? <a href="{{ url_for('registro') }}">Regístrate</a>
+    </p>
+  </div>
+
+  {% if session.get('mensaje') or session.get('error') %}
+  <div class="toast {{ 'error' if session.get('error') else 'success' }}">
+    {{ session.pop('error', None) or session.pop('mensaje', None) }}
+  </div>
+  {% endif %}
+</body>
+</html>

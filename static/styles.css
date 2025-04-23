@@ -1,0 +1,425 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Ya no "center", sino "flex-start" */
+    background: radial-gradient(circle at top left, #1b1b2f, #0f0f1c, #000000);
+    background-attachment: fixed;
+    background-size: cover;
+    color: #f0f0f0;
+    padding-top: 60px;
+    overflow: hidden;  /* Empujamos el contenido un poquito */
+  }
+  
+  
+      
+
+
+  .sidebar {
+    width: 100%;
+    max-width: 800px;
+    height: 90vh;
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    overflow-y: auto;
+    scrollbar-width: none;
+    transform: translateY(-60px); /* ajusta según lo que desees */
+  }
+
+.sidebar::-webkit-scrollbar {
+    display: none; /* 🔒 Chrome y Safari */
+  }
+
+  .sidebar:hover {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  
+  
+
+
+
+input, select {
+    
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 12px;
+        border: none;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.25);
+        color: #000000;
+        font-size: 15px;
+    }
+    
+
+button {
+    padding: 12px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    box-shadow: 0 4px 20px rgba(241, 239, 239, 0.3);
+    transform: translateY(-2px);
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    margin-top: 15px;
+    background-color: rgba(255, 255, 255, 0.07);
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul#lista-tareas li:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+  }
+  
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #2e2e3a;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal h2 {
+    margin: 2px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.modal input,
+.modal select {
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #444459;
+    color: white;
+    font-size: 14px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    margin: 0 5px;
+}
+
+.modal-buttons button:first-child {
+    background: #4caf50;
+}
+
+.modal-buttons button:last-child {
+    background: #f44336;
+}
+
+/* Trash can */
+.trash-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trash-can {
+    position: relative;
+    width: 24px;
+    height: 30px;
+}
+
+.trash-can .lid {
+    width: 24px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 3px 3px 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.trash-can .body {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: #858585;
+    border-radius: 0 0 5px 5px;
+    box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+/* Permanent visible lines inside the bin */
+.trash-can .body::before,
+.trash-can .body::after {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.4);
+    left: 20%;
+    border-radius: 1px;
+}
+
+.trash-can .body::before {
+    top: 5px;
+}
+
+.trash-can .body::after {
+    top: 10px;
+}
+
+/* Hover: just lift the lid */
+.trash-btn:hover .lid {
+    transform: translateY(-10px);
+}
+
+/* Estilos para login y registro */
+body .modal {
+    margin-top: 10vh;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 40px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    color: #fff;
+}
+
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+.modal h2 {
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+}
+.modal p {
+    margin: 10px 0;
+    font-size: 14px;
+    text-align: center;
+}
+
+.modal input {
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.modal input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.modal button {
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.modal a {
+    color: #ddd;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.modal a:hover {
+    text-decoration: underline;
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #2e2e2e;
+    color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    font-size: 15px;
+    z-index: 10000;
+    animation: fadeInOut 4s ease forwards;
+  }
+  
+  .toast.success {
+    background: #4caf50;
+  }
+  
+  .toast.error {
+    background: #f44336;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10%, 90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+  }
+
+  /* RESPONSIVE: Mobile-first tweaks */
+@media (max-width: 600px) {
+    .sidebar,
+    .modal {
+      width: 90%;
+      max-width: 100%;
+      margin: 30px auto;
+      padding: 20px;
+    }
+  
+    button,
+    input,
+    select {
+      font-size: 16px;
+    }
+  
+    h1, h2 {
+      font-size: 20px;
+      text-align: center;
+    }
+  
+    .toast {
+      top: 10px;
+      right: 10px;
+      font-size: 14px;
+      padding: 12px 16px;
+    }
+  
+    .modal-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .modal-buttons button {
+      width: 100%;
+    }
+  
+    ul#lista-tareas li {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  }
+  
+  .logout-form-fixed {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
+  
+  .logout-btn {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .logout-btn:hover {
+    box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  
+  .add-task-floating {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: all 0.3s ease;
+  }
+  
+  .add-task-floating:hover {
+    box-shadow: 0 4px 15px rgba(142, 146, 252, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .espaciador-scroll {
+    height: 80px; /* ajusta si tu botón es más grande */
+  }
+  
+  
+  

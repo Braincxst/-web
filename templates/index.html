@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Lista de Tareas</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <!-- Cuadro principal -->
+  <div class="sidebar">
+    <h1>¡Bienvenido, {{ nombre }}!</h1>
+
+    <div id="contador-tareas">Tareas: 0</div>
+
+    <select id="filtro-estado" onchange="cargarTareas()">
+      <option value="todos">Todos</option>
+      <option value="completados">Completados</option>
+      <option value="pendientes">Pendientes</option>
+    </select>
+
+    <ul id="lista-tareas"></ul>
+    <div class="espaciador-scroll"></div>
+  </div> 
+
+  <!-- Botón flotante de agregar tarea -->
+  <button onclick="mostrarFormulario()" class="add-task-floating">➕ Agregar tarea</button>
+
+  <!-- Botón flotante de cerrar sesión -->
+  <form method="get" action="{{ url_for('logout') }}" class="logout-form-fixed">
+    <button type="submit" class="logout-btn">Cerrar sesión</button>
+  </form>
+
+  <!-- Modal para crear tareas -->
+  <div class="modal-overlay" id="formulario-tarea">
+    <div class="modal">
+      <h2>Nueva Tarea</h2>
+      <input type="text" id="tarea" placeholder="Título de la tarea..." />
+      <input type="date" id="vencimiento" />
+      <select id="categoria">
+        <option value="Personal">Personal</option>
+        <option value="Trabajo">Trabajo</option>
+        <option value="Estudio">Estudio</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <div class="modal-buttons">
+        <button onclick="agregarTarea()">Guardar</button>
+        <button onclick="ocultarFormulario()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
